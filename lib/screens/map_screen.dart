@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:typed_data';
 import 'package:flutter/services.dart';
+import 'package:inpost_mock/constants.dart';
 import 'package:inpost_mock/data.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -70,6 +71,102 @@ class _MapScreenState extends State<MapScreen> {
     zoom: 15.0,
   );
 
+  showMarkerInfoWindow(CustomMapMarker m) async {
+    await showDialog<void>(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return SimpleDialog(
+          contentPadding:
+              EdgeInsets.symmetric(vertical: 20.0, horizontal: 12.0),
+          children: <Widget>[
+            Text(
+              'Paczk KAT12',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 10.0),
+            Divider(color: Colors.black),
+            SizedBox(height: 10.0),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Flexible(
+                  flex: 1,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        'RECEPTION VENUE',
+                        style: kLabelTextStyle.copyWith(fontSize: 8.0),
+                      ),
+                      SizedBox(height: 5.0),
+                      Text(
+                        'Plac OMP\n50-061 Katowice\nNear Train Station',
+                        style: TextStyle(fontSize: 12.0),
+                      )
+                    ],
+                  ),
+                ),
+                Flexible(
+                  flex: 1,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        'OPENING HOURS',
+                        style: kLabelTextStyle.copyWith(fontSize: 8.0),
+                      ),
+                      SizedBox(height: 5.0),
+                      Text(
+                        'Mo-Fr | 7:00-19:00\nSa-Su | 8:00-16:00',
+                        style: TextStyle(fontSize: 12.0),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Expanded(
+                  flex: 1,
+                  child: RaisedButton(
+                    shape: Border.all(color: Color(0xFFFDCA06)),
+                    color: Colors.white,
+                    onPressed: () {},
+                    child: Text(
+                      'NAVIGATE',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12.0,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 20.0,
+                ),
+                Expanded(
+                  flex: 1,
+                  child: RaisedButton(
+                    color: Color(0xFFFDCA06),
+                    onPressed: () {},
+                    child: Text('SEE POINT',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12.0,
+                        )),
+                  ),
+                )
+              ],
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Set<Marker> _createMarkers() {
     List<Marker> markers = [];
     var currMarkerList = markerList;
@@ -86,9 +183,13 @@ class _MapScreenState extends State<MapScreen> {
       final currIcon =
           m.markerType == 'pop' ? _markerIcon_pop : _markerIcon_parcel;
       final currMarker = Marker(
+          onTap: () {
+            // show modal for this marker
+            showMarkerInfoWindow(m);
+          },
           position: LatLng(m.lat, m.lng),
           markerId: MarkerId(m.markerId),
-          infoWindow: InfoWindow(title: m.title, snippet: m.snippet),
+//          infoWindow: InfoWindow(title: m.title, snippet: m.snippet),
           icon: currIcon);
 
       markers.add(currMarker);
