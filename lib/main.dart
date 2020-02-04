@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
           button: kAppTextStyle,
         ),
       ),
-      initialRoute: HomeScreen.id,
+      initialRoute: OnboardingScreen.id,
       routes: {
         OnboardingScreen.id: (context) => OnboardingScreen(),
         MapScreen.id: (context) => MapScreen(),

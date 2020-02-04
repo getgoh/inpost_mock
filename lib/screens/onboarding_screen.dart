@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:inpost_mock/onboarding_data.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:inpost_mock/screens/home_screen.dart';
 import 'package:inpost_mock/screens/map_screen.dart';
 import 'package:inpost_mock/widgets/reusable_white_arc.dart';
 
@@ -19,11 +20,22 @@ class _OnboardingScreenState extends State<OnboardingScreen>
   AnimationController _animationController;
   Animation _animation;
 
+  String buttonText = 'NEXT';
+
   @override
   void initState() {
     super.initState();
 
     _pageController = PageController(initialPage: _currentPage);
+    _pageController.addListener(() {
+      setState(() {
+        if (_currentPage == 3) {
+          buttonText = 'GET STARTED';
+        } else {
+          buttonText = 'NEXT';
+        }
+      });
+    });
     _animationController =
         AnimationController(vsync: this, duration: Duration(seconds: 1));
     _animation = Tween(begin: 0.0, end: 1.0).animate(_animationController);
@@ -140,14 +152,17 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                             horizontal: 60.0, vertical: 16.0),
                         color: Color(0xFFFDCA06),
                         onPressed: () {
-                          Navigator.pushNamed(context, MapScreen.id);
-//                          setState(() {
-//                            _pageController.nextPage(
-//                                duration: Duration(milliseconds: 600),
-//                                curve: Curves.easeIn);
-//                          });
+                          if (_currentPage == 3) {
+                            Navigator.pushNamed(context, HomeScreen.id);
+                          } else {
+                            setState(() {
+                              _pageController.nextPage(
+                                  duration: Duration(milliseconds: 600),
+                                  curve: Curves.easeIn);
+                            });
+                          }
                         },
-                        child: Text('NEXT'),
+                        child: Text(buttonText),
                       ),
                     ],
                   ),
