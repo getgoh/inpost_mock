@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        canvasColor: Colors.white,
         textTheme: TextTheme(
           body1: kAppTextStyle,
           body2: kAppTextStyle,

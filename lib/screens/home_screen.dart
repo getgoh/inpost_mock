@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:inpost_mock/screens/home_pages/archive_page.dart';
 import 'package:inpost_mock/screens/home_pages/home_parcel_tracking.dart';
 import 'package:inpost_mock/screens/home_pages/quick_returns_page.dart';
+import 'package:inpost_mock/screens/map_screen.dart';
 import 'package:inpost_mock/widgets/yellow_arc.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -107,10 +108,15 @@ class _HomeScreenState extends State<HomeScreen> {
         iconTheme: IconThemeData(color: Colors.black),
         backgroundColor: appBarColor,
         elevation: 0,
-        leading: IconButton(
-          icon: Icon(
-            FontAwesomeIcons.bars,
-            color: Colors.black54,
+        leading: Builder(
+          builder: (context) => IconButton(
+            icon: Icon(
+              FontAwesomeIcons.bars,
+              color: Colors.black54,
+            ),
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
           ),
         ),
         actions: <Widget>[
@@ -121,6 +127,85 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           )
         ],
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: <Widget>[
+            DrawerHeader(
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Image.asset(
+                        'images/inpost_logo.jpg',
+                        height: 30.0,
+                      ),
+                      Text(
+                        'InPost',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: ListTile(
+                title: Text('Parcel Archive'),
+                onTap: () {
+                  onBottomNavigationTap(context, 1);
+                  Navigator.pop(context);
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: ListTile(
+                title: Text('Map'),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.pushNamed(context, MapScreen.id);
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: ListTile(
+                title: Text('About App'),
+                onTap: () {
+                  // Update the state of the app.
+                  // ...
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: ListTile(
+                title: Text('Help'),
+                onTap: () {
+                  // Update the state of the app.
+                  // ...
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: ListTile(
+                title: Text('Settings'),
+                onTap: () {
+                  // Update the state of the app.
+                  // ...
+                },
+              ),
+            ),
+          ],
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: (index) {
