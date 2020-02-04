@@ -1,5 +1,7 @@
 # inpost_mock
 
+![](inpost.gif)
+
 Mock of [InPost](https://www.behance.net/gallery/87785193/InPost-Parcel-Delivery-App) design by the following owners:
 - [iteo](https://www.behance.net/iteo_apps)
 - [Mateusz Klein](https://www.behance.net/kleinmateusz)
